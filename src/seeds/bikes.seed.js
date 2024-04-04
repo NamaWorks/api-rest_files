@@ -1,3 +1,6 @@
+const mongoose = require("mongoose")
+const Bike = require("../api/models/bike_model")
+
 const bikes = [
     {
       modelName: "Honda CBR1000RR",
@@ -8,7 +11,7 @@ const bikes = [
     },
     {
       modelName: "Kawasaki Ninja ZX-10R",
-      maker: Kawasaki,
+      maker: "Kawasaki",
       year: 2004,
       image: "https://example.com/kawasaki_ninja_zx10r.jpg",
       category: "Superbike"
@@ -133,3 +136,26 @@ const bikes = [
       category: "Adventure"
     }
   ]
+
+  const bikesDocuments = bikes.map(bike => new Bike(bike))
+
+  const feedBikes = async () => {
+    try {
+        await mongoose
+            .connect(process.env.DB_URL)
+            .then(async () => {
+                const allBikes = Bike.find()
+                allBikes.length ? await bikes.collection.drop() : console.log(`the bikes collection is already empty`)
+            })
+            .catch(err => console.log(`error deleting data: ${err}`))
+            .then(async () => {
+                await Bike.insertMany(bikesDocuments)
+                console.log(`allBikes inserted`)
+            })
+            .catch(err => console.log(`error at insertMany(): ${err}`))
+    } catch (err) {
+        console.log(`error feeding bikes: ${err}`)
+    }
+  }
+
+  module.exports = { feedBikes }
