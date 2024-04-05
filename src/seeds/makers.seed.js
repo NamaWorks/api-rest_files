@@ -1,4 +1,5 @@
-// Honda Kawasaki Yamaha Suzuki Ducati BMW Triumph KTM Aprilia MV Agusta Harley-Davidson Indian 
+const mongoose = require("mongoose")
+const Maker = require("../api/models/maker_model")
 
 const makers = [
     {
@@ -68,3 +69,32 @@ const makers = [
         founder: "George M. Hendee",
     }
 ]
+
+const makersDocuments = makers.map(maker => new Maker(maker))
+
+const feedMakers = async () => {
+    try {
+        await mongoose
+            .connect(process.env.DB_URL)
+                .then( async () => {
+                    const allMakers = await Maker.find()
+                    allMakers.length ? await Maker.collection.drop() : console.log(`the makers collection is already empty`)
+                })
+                .catch(err => console.log(`error deleting data-makers: ${err}`))
+                .then(async () => {
+                    
+                    // await Maker.instertMany(makersDocuments); // WE HAVE TO CHECK WHY THIS IS NOT WORKING
+
+                    makersDocuments.forEach( async (maker)=> {
+                        await maker.save()
+                    })
+
+                    console.log(`makersDocuments insterted`)
+                })
+                .catch(err => console.log(`error at insertMany(makersDocuments): ${err}`))
+    } catch (err) {
+        console.log(`error feeding makers: ${err}`)
+    }
+}
+
+module.exports = { feedMakers }

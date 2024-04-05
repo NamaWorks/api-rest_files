@@ -144,15 +144,15 @@ const bikes = [
         await mongoose
             .connect(process.env.DB_URL)
             .then(async () => {
-                const allBikes = Bike.find()
-                allBikes.length ? await bikes.collection.drop() : console.log(`the bikes collection is already empty`)
+                const allBikes = await Bike.find()
+                if(allBikes.length){Bike.collection.drop()}
             })
-            .catch(err => console.log(`error deleting data: ${err}`))
+            .catch(err => console.log(`error deleting data-bikes: ${err}`))
             .then(async () => {
                 await Bike.insertMany(bikesDocuments)
-                console.log(`allBikes inserted`)
+                console.log(`bikesDocuments inserted`)
             })
-            .catch(err => console.log(`error at insertMany(): ${err}`))
+            .catch(err => console.log(`error at insertMany(bikesDocuments): ${err}`))
     } catch (err) {
         console.log(`error feeding bikes: ${err}`)
     }
