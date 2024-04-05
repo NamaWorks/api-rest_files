@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Maker = require("../api/models/maker_model")
+const { insertMany } = require("../api/models/bike_model")
 
 const makers = [
     {
@@ -83,11 +84,12 @@ const feedMakers = async () => {
                 .catch(err => console.log(`error deleting data-makers: ${err}`))
                 .then(async () => {
                     
-                    // await Maker.instertMany(makersDocuments); // WE HAVE TO CHECK WHY THIS IS NOT WORKING
-
-                    makersDocuments.forEach( async (maker)=> {
-                        await maker.save()
-                    })
+                    await Maker.insertMany(makersDocuments);
+                    
+                    //! OTHER WAY OF DOING IT, USING A FOREACH
+                    // makersDocuments.forEach( async (maker)=> {
+                    //     await maker.save()
+                    // })
 
                     console.log(`makersDocuments insterted`)
                 })
