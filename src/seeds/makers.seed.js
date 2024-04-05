@@ -25,4 +25,46 @@ const makers = [
         foundationYear: 1909,
         founder: "Michio Suzuki",
     },
+    {
+        makerName: "Ducati",
+        country: "Italy",
+        foundationYear: 1926,
+        founder: "Antonio Cavalieri Ducati",
+    },
+    {
+        makerName: "BMW",
+        country: "Germany",
+        foundationYear: 1923,
+        founder: "Karl Rapp",
+    },
+    {
+        makerName: "KTM",
+        country: "Austria",
+        foundationYear: 1934,
+        founder: "Hans Trunkenpolz",
+    },
+    {
+        makerName: "Aprilia",
+        country: "Italy",
+        foundationYear: 1945,
+        founder: "Alberto Beggio",
+    },
+    {
+        makerName: "MV Agusta",
+        country: "Italy",
+        foundationYear: 1945,
+        founder: "Conde Giovanni Agusta",
+    },
+    {
+        makerName: "Harley-Davidson",
+        country: "US",
+        foundationYear: 1903,
+        founder: "William S. Harley",
+    },
+    {
+        makerName: "Indian",
+        country: "US",
+        foundationYear: 1901,
+        founder: "George M. Hendee",
+    }
 ]
