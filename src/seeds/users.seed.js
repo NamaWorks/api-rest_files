@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const User = require("../api/models/user_model")
+const bcrypt = require("bcrypt")
 
 const users = [
     {
@@ -46,7 +47,13 @@ const users = [
     },
 ]
 
-const usersDocuments = users.map(user=>new User(user))
+const usersDocuments = users.map(user=>new User({
+    userName: user.userName,
+    email: user.email,
+    password: bcrypt.hashSync(user.password, 10),
+    profileImage: user.profileImage,
+    role: user.role
+}))
 
 const feedUsers = async () => {
     try {
