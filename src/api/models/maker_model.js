@@ -2,10 +2,11 @@ const mongoose = require("mongoose")
 
 const makerSchema = new mongoose.Schema(
     {
-        makerName: { type: String, required: true },
+        makerName: { type: String, required: true, unique: true },
         country: { type: String, required: true },
         foundationYear: { type: Number, default: "TBD" },
-        founder: { type: String, default: "TBD" }
+        founder: { type: String, default: "TBD" },
+        logo: { type: String }
     }, {
         timestamps: true,
         collection: "makers"
