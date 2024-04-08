@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Bike = require("../api/models/bike_model")
+const Maker = require("../api/models/maker_model")
 
 const bikes = [
     {
@@ -138,6 +139,7 @@ const bikes = [
   ]
 
   const bikesDocuments = bikes.map(bike => new Bike(bike))
+  let bikesData = []
 
   const feedBikes = async () => {
     try {
@@ -149,8 +151,26 @@ const bikes = [
             })
             .catch(err => console.log(`error deleting data-bikes: ${err}`))
             .then(async () => {
-                await Bike.insertMany(bikesDocuments)
+                // await Bike.insertMany(bikesDocuments)
+                
+                //! Prepare populate function for the bikes makers
+                
+                const makers = await Maker.find()
+                bikes.forEach(bike => {
+                  const bikeMaker = bike.maker
+                  makers.forEach(maker => {
+                    const {makerName} = maker
+                    if(makerName === bikeMaker) {
+                      // makerId = maker._id
+                      bike.maker = maker._id
+                    }
+                  })
+                  bikesData.push(new Bike(bike))
+                })
+                await Bike.insertMany(bikesData)
+
                 console.log(`bikesDocuments inserted`)
+
             })
             .catch(err => console.log(`error at insertMany(bikesDocuments): ${err}`))
     } catch (err) {

@@ -74,5 +74,15 @@ const updateMaker = async (req, res, next) => {
     }
 }
 
+const getMakerByYear = async (req, res, next) => {
+    try {
+        const givenYear = req.params.year
+        const makers = await Maker.find({foundationYear : {$gte:givenYear}})
+        return res.status(200).json(makers)
+    } catch (err) {
+        return res.status(400).json(`error at getByYear: ${err}`)
+    }
+}
 
-module.exports = { getMakers , getMakerByName, getMakerById, postMaker, removeMaker, updateMaker }
+
+module.exports = { getMakers , getMakerByName, getMakerById, postMaker, removeMaker, updateMaker, getMakerByYear }

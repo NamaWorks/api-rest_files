@@ -12,12 +12,13 @@ const app = express()
 connectDB()
 app.use(express.json())
 
+feedUsers()
 feedMakers()
 feedBikes()
-feedUsers()
 
-app.use("/api/v01/bikes", bikesRouter)
+
 app.use("/api/v01/makers", makerRouter)
+app.use("/api/v01/bikes", bikesRouter)
 
 app.use("*", (req, res, next) => {
     return res.status(404).json(`route not found`)

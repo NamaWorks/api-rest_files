@@ -10,6 +10,13 @@ const makers = [
         logo: "pending to add logo"
     },
     {
+        makerName: "Triumph",
+        country: "United Kingdom",
+        foundationYear: 1902,
+        founder: "John Bloor",
+        logo: "pending to add logo"
+    },
+    {
         makerName: "Kawasaki",
         country: "Japan",
         foundationYear: 1896,
