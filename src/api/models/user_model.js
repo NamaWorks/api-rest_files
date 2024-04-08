@@ -13,3 +13,7 @@ const mongoose = require("mongoose")
      collection: "users"   
     }
  )
+
+ const User = mongoose.model("users", userSchema, "users")
+
+ module.exports = User

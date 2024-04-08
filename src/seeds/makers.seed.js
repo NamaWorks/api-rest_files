@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 const Maker = require("../api/models/maker_model")
-const { insertMany } = require("../api/models/bike_model")
 
 const makers = [
     {
@@ -85,7 +84,7 @@ const feedMakers = async () => {
                 .then(async () => {
                     
                     await Maker.insertMany(makersDocuments);
-                    
+
                     //! OTHER WAY OF DOING IT, USING A FOREACH
                     // makersDocuments.forEach( async (maker)=> {
                     //     await maker.save()
