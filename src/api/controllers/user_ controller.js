@@ -78,4 +78,4 @@ const updateUserById = async (req, res, next) => {
     }
 }
 
-module.exports = { getUsers , userLogin, userSignUp, deleteUserById}
+module.exports = { getUsers , userLogin, userSignUp, deleteUserById, updateUserById}
