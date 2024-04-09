@@ -18,16 +18,16 @@ const userSignUp = async (req, res, next) => {
             email: req.body.email,
             password: req.body.password,
             profileImage: req.body.profileImage,
-            role: req.body.role
+            role: "user"
         })
-        const userDuplicated = await User.findOne({userName: req.body.email})
-            if(userduplicated){return res.status(400).json(`that email is already in use`)}
+        const userDuplicated = await User.findOne({email : req.body.email})
+            if(userDuplicated){return res.status(400).json(`that email is already in use`)}
 
             const userSaved = await newUser.save()
 
             return res.status(201).json(userSaved)
     } catch (err) {
-        return res.status(400).json(err)
+        return res.status(400).json(`error at userSignUp: ${err}`)
     }
 }
 

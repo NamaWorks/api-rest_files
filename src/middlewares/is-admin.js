@@ -1,3 +1,6 @@
+const User = require("../api/models/user_model")
+const { verifyJwt } = require("../utils/jwt")
+
 const isAdmin = async (req, res, next) => {
     try {
         const token = req.headers.authorization
