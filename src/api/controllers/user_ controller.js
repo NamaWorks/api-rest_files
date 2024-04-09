@@ -1,3 +1,4 @@
+const { generateSign } = require("../../utils/jwt");
 const User = require("../models/user_model");
 const bcrypt = require("bcrypt")
 
@@ -30,7 +31,6 @@ const userSignUp = async (req, res, next) => {
     }
 }
 
-
 const userLogin = async (req, res, next) => {
     try {
         // const userName = await User.findOne({userName : req.body.userName})
@@ -38,6 +38,7 @@ const userLogin = async (req, res, next) => {
 
         if(userMail){
             if(bcrypt.compareSync(req.body.password, userMail.password)) {
+                const token = generateSign(userMail._id)
                 return res.status(200).json({ userMail, token})
             } else {
                 return res.status(400).json(`user or passwor are incorrect`)
@@ -51,4 +52,30 @@ const userLogin = async (req, res, next) => {
     }
 }
 
-module.exports = { getUsers , userLogin, userSignUp}
+const deleteUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params
+
+        const userDeleted = await User.findByIdAndDelete(id)
+
+        return res.status(200).json(`user deleted: ${userDeleted}`)
+    } catch (err) {
+        return res.status(400).json(`error at deleteUserById: ${err}`)
+    }
+}
+
+const updateUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params
+
+        const newUser = new User(req.body)
+        newUser._id = id
+
+        const updatedUser = await User.findByIdAndUpdate(id, newUser, {new:true})
+        return res.status(200).json(updatedUser)
+    } catch (err) {
+        return res.status(400).json(`error at updateUserById: ${err}`)
+    }
+}
+
+module.exports = { getUsers , userLogin, userSignUp, deleteUserById}
