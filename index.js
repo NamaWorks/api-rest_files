@@ -1,6 +1,7 @@
 const express = require("express")
 const bikesRouter = require("./src/api/routes/bike_routes")
 const makerRouter = require("./src/api/routes/maker_routes")
+const userRouter = require("./src/api/routes/user_routes")
 const { connectDB } = require("./src/config/db")
 const { feedBikes } = require("./src/seeds/bikes.seed")
 const { feedMakers } = require("./src/seeds/makers.seed")
@@ -19,6 +20,7 @@ feedBikes()
 
 app.use("/api/v01/makers", makerRouter)
 app.use("/api/v01/bikes", bikesRouter)
+app.use("/api/v01/users", userRouter)
 
 app.use("*", (req, res, next) => {
     return res.status(404).json(`route not found`)
