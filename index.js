@@ -6,30 +6,28 @@ const { connectDB } = require("./src/config/db")
 const { feedBikes } = require("./src/seeds/bikes.seed")
 const { feedMakers } = require("./src/seeds/makers.seed")
 const { feedUsers } = require("./src/seeds/users.seed")
+const { configCloudinary } = require("./src/middlewares/files.middlewares")
 const cloudinary = require("cloudinary").v2
+configCloudinary()
 
 require("dotenv").config()
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_API_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-})
 
 const app = express()
 connectDB()
 app.use(express.json())
 
-feedUsers()
-feedMakers()
-feedBikes()
+// feedUsers()
+// feedMakers()
+// feedBikes()
 
 
 app.use("/api/v01/makers", makerRouter)
 app.use("/api/v01/bikes", bikesRouter)
 app.use("/api/v01/users", userRouter)
 
-app.use("*", (req, res, next) => {
+app.use("*", (err, req, res, next) => {
+    if(err) {res.status(404).json({error: error.message})}
     return res.status(404).json(`route not found`)
 })
 
