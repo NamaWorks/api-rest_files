@@ -13,4 +13,20 @@ const getBikes = async (req, res, next) => {
     }
 }
 
-module.exports = { bikesPong , getBikes }
+const postBike = async (req, res, next) => {
+    try {
+        const newBike = new Bike(req.body)
+
+        if(req.file){
+            console.log(`there's a file`)
+            newBike.image = req.file.path
+        }
+
+        const bikeSaved = await newBike.save()
+        return res.status(201).json(bikeSaved)
+    } catch (err) {
+        return res.status(400).json(`error at postBike: ${err}`)
+    }
+}
+
+module.exports = { bikesPong , getBikes, postBike }

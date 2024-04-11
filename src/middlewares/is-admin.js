@@ -10,6 +10,9 @@ const isAdmin = async (req, res, next) => {
         const parsedToken = token.replace("Bearer ", "")
         const validToken = verifyJwt(parsedToken, process.env.JWT_SECRET)
         const userLogued = await User.findById(validToken.id)
+
+        // if(userLogued.role === null) { userLogued.role = "user"}
+
         const userRole = userLogued.role
 
         if(userRole === "admin"){

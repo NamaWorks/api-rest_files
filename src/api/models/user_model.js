@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
         userName: {type: String, required: true, unique: true},
         email: {type: String, required: true, unique: true},
         password: {type: String, required: true},
-        profileImage: {type: String, required:false , default:"TBD"},
+        profileImage: {type: String, required:false , default:"TBD", trim: true},
         role: {type: String, enum:["user", "admin"], default:"user"}
     },
     {
