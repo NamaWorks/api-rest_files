@@ -5,7 +5,7 @@ const Maker = require("../models/maker_model")
 const bikesRouter = require("express").Router()
 
 bikesRouter.get("/all", getBikes)
-bikesRouter.post("/new", upload.single("image"), postBike)
+bikesRouter.post("/", upload.single("image"), postBike)
 // bikesRouter.get("/", async(req, res, next)=> {
 //         try {
 //             const makers = await Maker.find().populate('maker')

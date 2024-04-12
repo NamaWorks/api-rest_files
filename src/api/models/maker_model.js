@@ -6,7 +6,7 @@ const makerSchema = new mongoose.Schema(
         country: { type: String, required: true },
         foundationYear: { type: Number, default: "TBD" },
         founder: { type: String, default: "TBD" },
-        logo: { type: String }
+        image: { type: String }
     }, {
         timestamps: true,
         collection: "makers"

@@ -7,42 +7,42 @@ const users = [
         userName: "Admin",
         email: "admin@admin.com",
         password: "Admin123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/admin.jpg",
         role: "admin",
     },
     {
         userName: "Juan",
         email: "juan@email.com",
         password: "Juan123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/juanjpg.jpg",
         role: "user",
     },
     {
         userName: "Clara",
         email: "clara@email.com",
         password: "Clara123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/clara.jpg",
         role: "user",
     },
     {
         userName: "Rosa",
         email: "rosa@email.com",
         password: "Rosa123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/rosa.jpg",
         role: "user",
     },
     {
         userName: "Pepe",
         email: "pepe@email.com",
         password: "Pepe123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/pepe.jpg",
         role: "user",
     },
     {
         userName: "Alex",
         email: "alex@email.com",
         password: "Alex123!@",
-        profileImage: "#",
+        image: "src/assets/user-img/alex.jpg",
         role: "user",
     },
 ]
@@ -51,7 +51,7 @@ const usersDocuments = users.map(user=>new User({
     userName: user.userName,
     email: user.email,
     password: bcrypt.hashSync(user.password, 10),
-    profileImage: user.profileImage,
+    image: user.image,
     role: user.role
 }))
 

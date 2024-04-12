@@ -7,84 +7,84 @@ const makers = [
         country: "Japan",
         foundationYear: 1949,
         founder: "Sōichirō Honda",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/honda.jpg"
     },
     {
         makerName: "Triumph",
         country: "United Kingdom",
         foundationYear: 1902,
         founder: "John Bloor",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/triumph.jpg"
     },
     {
         makerName: "Kawasaki",
         country: "Japan",
         foundationYear: 1896,
         founder: "Shozo Kawasaki",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/kawasaki.jpg"
     },
     {
         makerName: "Yamaha",
         country: "Japan",
         foundationYear: 1887,
         founder: "Torakusu Yamaha",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/yamaha.jpg"
     },
     {
         makerName: "Suzuki",
         country: "Japan",
         foundationYear: 1909,
         founder: "Michio Suzuki",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/suzuki.jpg"
     },
     {
         makerName: "Ducati",
         country: "Italy",
         foundationYear: 1926,
         founder: "Antonio Cavalieri Ducati",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/ducati.jpg"
     },
     {
         makerName: "BMW",
         country: "Germany",
         foundationYear: 1923,
         founder: "Karl Rapp",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/bmw.jpg"
     },
     {
         makerName: "KTM",
         country: "Austria",
         foundationYear: 1934,
         founder: "Hans Trunkenpolz",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/ktm.png"
     },
     {
         makerName: "Aprilia",
         country: "Italy",
         foundationYear: 1945,
         founder: "Alberto Beggio",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/aprilia.png"
     },
     {
         makerName: "MV Agusta",
         country: "Italy",
         foundationYear: 1945,
         founder: "Conde Giovanni Agusta",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/mv-agusta.jpeg"
     },
     {
         makerName: "Harley-Davidson",
         country: "US",
         foundationYear: 1903,
         founder: "William S. Harley",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/Harley_davidson.jpg"
     },
     {
         makerName: "Indian",
         country: "US",
         foundationYear: 1901,
         founder: "George M. Hendee",
-        logo: "pending to add logo"
+        image: "src/assets/makers_img/indian.png"
     }
 ]
 
