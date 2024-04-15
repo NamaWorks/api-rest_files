@@ -1,3 +1,4 @@
+const { deleteImgCloudinary } = require("../../middlewares/files.middlewares");
 const { generateSign } = require("../../utils/jwt");
 const User = require("../models/user_model");
 const bcrypt = require("bcrypt")
@@ -14,12 +15,12 @@ const getUsers = async (req, res, next) => {
 const userSignUp = async (req, res, next) => {
     try {
         const newUser = new User({
-            userName: req.body.userName,
-            email: req.body.email,
-            password: req.body.password,
-            profileImage: req.body.profileImage,
-            role: "user"
+            ...req.body,
+            accepted: false
         })
+        if(req.file){
+            newUser.image = req.file.path
+        }
         const userDuplicated = await User.findOne({email : req.body.email})
             if(userDuplicated){return res.status(400).json(`that email is already in use`)}
 
@@ -69,6 +70,13 @@ const updateUserById = async (req, res, next) => {
 
         const newUser = new User(req.body)
         newUser._id = id
+
+        if(newUser.image){
+            const userToUpdate = await User.findById(id)
+            const { image } = userToUpdate
+            deleteImgCloudinary(image)
+            newUser.image = req.file.path
+        }
 
         const updatedUser = await User.findByIdAndUpdate(id, newUser, {new:true})
         return res.status(200).json(updatedUser)

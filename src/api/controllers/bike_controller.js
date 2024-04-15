@@ -14,7 +14,10 @@ const getBikes = async (req, res, next) => {
 
 const postBike = async (req, res, next) => {
     try {
-        const newBike = new Bike(req.body)
+        const newBike = new Bike({
+            ...req.body,
+            accepted: false
+        })
 
         if (req.file) {
             newBike.image = req.file.path;

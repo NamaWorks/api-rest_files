@@ -8,7 +8,7 @@ const bikesRouter = require("express").Router()
 
 bikesRouter.get("/all", getBikes)
 bikesRouter.post("/", [isAuth], upload.single("image"), postBike)
-bikesRouter.put("/id/:id", [isAdmin], updateBikeById)
+bikesRouter.put("/id/:id", [isAdmin], upload.single("image"), updateBikeById)
 bikesRouter.delete("/id/:id",[isAdmin], removeBikeById)
 
 // bikesRouter.get("/", async(req, res, next)=> {

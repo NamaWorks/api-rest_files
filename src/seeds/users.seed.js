@@ -52,7 +52,8 @@ const usersDocuments = users.map(user=>new User({
     email: user.email,
     password: bcrypt.hashSync(user.password, 10),
     image: user.image,
-    role: user.role
+    role: user.role,
+    accepted: true
 }))
 
 const feedUsers = async () => {

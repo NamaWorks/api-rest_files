@@ -39,11 +39,15 @@ const postMaker = async (req, res, next) => {
             country: req.body.country,
             foundationYear: req.body.foundationYear,
             founder: req.body.founder,
-            logo: req.body.logo
+            logo: req.body.logo,
+            accepted: false
         })
 
         const makerDuplicated = await Maker.findOne({makerName: req.body.makerName})
         if(!makerDuplicated){
+            if (req.file) {
+                newMaker.image = req.file.path;
+              }
             const makerSaved = await newMaker.save()
             return res.status(200).json(makerSaved)
         } else { return res.status(400).json(`this maker already exists`)}

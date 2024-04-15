@@ -1,4 +1,5 @@
 const { isAuth } = require("../../middlewares/auth");
+const { upload } = require("../../middlewares/files.middlewares");
 const { isAdmin } = require("../../middlewares/is-admin");
 const { getMakers, getMakerByName, getMakerById, postMaker, removeMaker, updateMaker, getMakerByYear } = require("../controllers/maker_controller");
 
@@ -8,7 +9,7 @@ makerRouter.get("/all", getMakers)
 makerRouter.get("/year/:year", getMakerByYear)
 makerRouter.get("/:makerName", getMakerByName)
 makerRouter.get("/id/:_id", getMakerById)
-makerRouter.post("/",[isAuth], postMaker)
+makerRouter.post("/",[isAuth], upload.single("image"), postMaker)
 makerRouter.delete("/id/:id",[isAdmin], removeMaker)
 makerRouter.put("/id/:id",[isAdmin], updateMaker)
 
