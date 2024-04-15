@@ -10,15 +10,15 @@ bikesRouter.get("/all", getBikes)
 bikesRouter.post("/", [isAuth], upload.single("image"), postBike)
 bikesRouter.put("/id/:id", [isAdmin], upload.single("image"), updateBikeById)
 bikesRouter.delete("/id/:id",[isAdmin], removeBikeById)
+bikesRouter.get("/", async(req, res, next)=> {
+        try {
+            const makers = await Maker.find().populate('makers')
+            console.log(makers)
+            return res.status(200).json(makers)
+        } catch (err) {
+            return next(err)
+        }
 
-// bikesRouter.get("/", async(req, res, next)=> {
-//         try {
-//             const makers = await Maker.find().populate('maker')
-//             console.log(makers)
-//             return res.status(200).json(makers)
-//         } catch (err) {
-//             return next(err)
-//         }
-// })
+})
 
 module.exports = bikesRouter

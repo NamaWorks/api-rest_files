@@ -165,23 +165,24 @@ const bikes = [
             })
             .catch(err => console.log(`error deleting data-bikes: ${err}`))
             .then(async () => {
-                await Bike.insertMany(bikesDocuments)
+
+                // await Bike.insertMany(bikesDocuments)
                 
                 // //! Prepare populate function for the bikes makers
                 
-                // const makers = await Maker.find()
-                // bikes.forEach(bike => {
-                //   const bikeMaker = bike.maker
-                //   makers.forEach(maker => {
-                //     const {makerName} = maker
-                //     if(makerName === bikeMaker) {
-                //       // makerId = maker._id
-                //       bike.maker = maker._id
-                //     }
-                //   })
-                //   bikesData.push(new Bike(bike))
-                // })
-                // await Bike.insertMany(bikesData)
+                const makers = await Maker.find()
+                bikes.forEach(bike => {
+                  let bikeMaker = bike.maker
+                  makers.forEach(async (maker) => {
+                    const {makerName} = maker
+                    if(makerName === bikeMaker) {
+                      bike.maker = maker._id
+                      console.log(bike)
+                    }
+                  })
+                  bikesData.push(new Bike(bike))
+                })
+                await Bike.insertMany(bikesData)
 
                 console.log(`bikesDocuments inserted`)
 

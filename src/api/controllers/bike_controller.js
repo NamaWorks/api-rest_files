@@ -1,11 +1,21 @@
 const { deleteImgCloudinary } = require("../../middlewares/files.middlewares")
 const Bike = require("../models/bike_model")
+const Maker = require("../models/maker_model")
+
 // const multer= require("multer")
+
+
+
+
+
+
 
 
 const getBikes = async (req, res, next) => {
     try {
-        const allBikes = await Bike.find()
+        const allBikes = await Bike
+        .find()
+        .populate("maker")
         return res.status(200).json(allBikes)
     } catch (err) {
         return res.status(400).json(`error getting all bikes: ${err}`)
