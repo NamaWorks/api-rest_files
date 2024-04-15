@@ -9,6 +9,7 @@ const bikeSchema = new mongoose.Schema(
         year: { type: Number , required: true , default: "TBD"  },
         image: { type: String , required: false },
         category: { type: String , required: false , default: "TBD" },
+        accepted: { type: Boolean, default: false },
 
     }, {
         timestamps: true,

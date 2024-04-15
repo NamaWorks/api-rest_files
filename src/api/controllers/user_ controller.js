@@ -55,9 +55,8 @@ const userLogin = async (req, res, next) => {
 const deleteUserById = async (req, res, next) => {
     try {
         const { id } = req.params
-
         const userDeleted = await User.findByIdAndDelete(id)
-
+        if(userdeleted.image){deleteImgCloudinary(userdeleted.image)}
         return res.status(200).json(`user deleted: ${userDeleted}`)
     } catch (err) {
         return res.status(400).json(`error at deleteUserById: ${err}`)

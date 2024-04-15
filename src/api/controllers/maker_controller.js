@@ -1,3 +1,4 @@
+const { deleteImgCloudinary } = require("../../middlewares/files.middlewares");
 const Maker = require("../models/maker_model");
 
 const getMakers = async (req, res, next) => {
@@ -56,6 +57,7 @@ const removeMaker = async (req, res, next) => {
     try {
         const { id } = req.params
         const makerToRemove = await Maker.findByIdAndDelete(id)
+        if(makerToRemove.image){deleteImgCloudinary(makerToRemove.image)}
         return res.status(200).json(`removed: ${makerToRemove}`)
     } catch (err) {
         return res.status(400).json(`error at removeMaker: ${err}`)

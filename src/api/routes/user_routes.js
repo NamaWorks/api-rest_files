@@ -7,7 +7,7 @@ const userRouter = require("express").Router()
 userRouter.get("/all", [isAdmin], getUsers)
 userRouter.post("/signup", userSignUp)
 userRouter.post("/login", userLogin)
-userRouter.put("/id/:id", [isAuth], updateUserById)
+userRouter.put("/id/:id", [isAdmin], updateUserById)
 userRouter.delete("/id/:id", [isAdmin], deleteUserById)
 
 

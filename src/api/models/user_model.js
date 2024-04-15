@@ -7,7 +7,8 @@ const bcrypt = require("bcrypt")
         email: {type: String, required: true, unique: true},
         password: {type: String, required: true},
         image: {type: String, required:false , default:"TBD", trim: true},
-        role: {type: String, enum:["user", "admin"], default:"user"}
+        role: {type: String, enum:["user", "admin"], default:"user"},
+        accepted: { type: Boolean, default: false },
     },
     {
      timestamps: true,
