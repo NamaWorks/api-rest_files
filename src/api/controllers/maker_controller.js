@@ -71,8 +71,14 @@ const removeMaker = async (req, res, next) => {
 const updateMaker = async (req, res, next) => {
     try {
         const {id} = req.params
+        const originalMaker = await Maker.findById(id)
+        deleteImgCloudinary(originalMaker.image)
+
         const newMaker = new Maker(req.body)
         newMaker._id = id
+
+        if(req.file){newMaker.image = req.file.path}
+
         const updatedMaker = await Maker.findByIdAndUpdate(id, newMaker, { new: true })
         return res.status(200).json(`updated: ${updatedMaker}`)
     } catch (err) {

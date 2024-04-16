@@ -38,8 +38,11 @@ const postBike = async (req, res, next) => {
 const updateBikeById = async (req, res, next) => {
     try {
         const { id } = req.params
+        const originalBike = await Bike.findById(id)
+        deleteImgCloudinary(originalBike.image)
         const newBike = new Bike(req.body)
         newBike._id = id
+        if(req.file) {newBike.image = req.file.path}
         const updatedBike = await Bike.findByIdAndUpdate(id, newBike, { new: true })
         return res.status(200).json(`updated: ${updatedBike}`)
     } catch (err) {

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const Bike = require("../api/models/bike_model")
 const Maker = require("../api/models/maker_model")
+const { upload } = require("../middlewares/files.middlewares")
+const cloudinary = require('cloudinary').v2;
 
 const bikes = [
     {
@@ -153,7 +155,38 @@ const bikes = [
     ...bike,
     accepted: true
   }))
+  
   let bikesData = []
+  const prepareBikesData = async () => {
+    try {    
+        //! Prepare populate function for the bikes makers
+        const makers = await Maker.find()
+        bikes.forEach(bike => {
+          let bikeMaker = bike.maker
+          makers.forEach(async (maker) => {
+            const {makerName} = maker
+            if(makerName === bikeMaker) {
+              bike.maker = maker._id
+            }
+          })
+
+          //! Upload to cloudinary
+          // cloudinary.uploader
+          // .upload(bike.image, { 
+          //   use_filename: true,
+          //   folder: "12_RTC_P12_API-REST-FILES"})
+          // .then((result)=>{
+          //   console.log(result.url)
+          //   bike.image = result.url
+          //   // console.log(bike)
+          // });
+          
+          bikesData.push(new Bike(bike))
+        })
+    } catch (err) {
+      console.log(`error preparing bikes data: ${err}`)
+    }
+  }
 
   const feedBikes = async () => {
     try {
@@ -165,27 +198,13 @@ const bikes = [
             })
             .catch(err => console.log(`error deleting data-bikes: ${err}`))
             .then(async () => {
-
-                // await Bike.insertMany(bikesDocuments)
-                
-                // //! Prepare populate function for the bikes makers
-                
-                const makers = await Maker.find()
-                bikes.forEach(bike => {
-                  let bikeMaker = bike.maker
-                  makers.forEach(async (maker) => {
-                    const {makerName} = maker
-                    if(makerName === bikeMaker) {
-                      bike.maker = maker._id
-                      // console.log(bike)
-                    }
-                  })
-                  bikesData.push(new Bike(bike))
-                })
-                await Bike.insertMany(bikesData)
-
-                console.log(`bikesDocuments inserted`)
-
+                await prepareBikesData()
+                console.log(`bikeData prepared`)
+            })
+            .catch(err => console.log(`error at prepareBikesData: ${err}`))
+            .then(async () => {
+              await Bike.insertMany(bikesData)
+              console.log(`bikesData inserted`)
             })
             .catch(err => console.log(`error at insertMany(bikesDocuments): ${err}`))
     } catch (err) {
