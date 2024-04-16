@@ -12,7 +12,7 @@ bikesRouter.put("/id/:id", [isAdmin], upload.single("image"), updateBikeById)
 bikesRouter.delete("/id/:id",[isAdmin], removeBikeById)
 bikesRouter.get("/", async(req, res, next)=> {
         try {
-            const makers = await Maker.find().populate('makers')
+            const makers = await Maker.find().populate('maker')
             console.log(makers)
             return res.status(200).json(makers)
         } catch (err) {

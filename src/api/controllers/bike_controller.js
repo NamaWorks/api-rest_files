@@ -5,12 +5,6 @@ const Maker = require("../models/maker_model")
 // const multer= require("multer")
 
 
-
-
-
-
-
-
 const getBikes = async (req, res, next) => {
     try {
         const allBikes = await Bike

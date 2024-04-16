@@ -177,7 +177,7 @@ const bikes = [
                     const {makerName} = maker
                     if(makerName === bikeMaker) {
                       bike.maker = maker._id
-                      console.log(bike)
+                      // console.log(bike)
                     }
                   })
                   bikesData.push(new Bike(bike))
