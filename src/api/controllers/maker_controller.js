@@ -72,7 +72,7 @@ const updateMaker = async (req, res, next) => {
     try {
         const {id} = req.params
         const originalMaker = await Maker.findById(id)
-        // if(originalMaker.image){deleteImgCloudinary(originalMaker.image)}
+        if(originalMaker.image){deleteImgCloudinary(originalMaker.image)}
         
         const newMaker = new Maker(req.body)
         newMaker._id = id
