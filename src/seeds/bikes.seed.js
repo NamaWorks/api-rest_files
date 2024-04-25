@@ -193,7 +193,7 @@ const bikes = [
         })
         .then((result) => {
             bike.image = result.url
-            console.log(bike)
+            // console.log(bike)
         })
       }
       async function feed() {
