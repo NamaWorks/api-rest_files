@@ -1,3 +1,4 @@
+require("dotenv").config()
 const mongoose = require("mongoose")
 const User = require("../api/models/user_model")
 const bcrypt = require("bcrypt")
@@ -9,6 +10,7 @@ const users = [
         password: "Admin123!@",
         image: "src/assets/user-img/admin.jpg",
         role: "admin",
+        accepted: true
     },
     {
         userName: "Juan",
@@ -16,6 +18,7 @@ const users = [
         password: "Juan123!@",
         image: "src/assets/user-img/juanjpg.jpg",
         role: "user",
+        accepted: true
     },
     {
         userName: "Clara",
@@ -23,6 +26,7 @@ const users = [
         password: "Clara123!@",
         image: "src/assets/user-img/clara.jpg",
         role: "user",
+        accepted: true
     },
     {
         userName: "Rosa",
@@ -30,6 +34,7 @@ const users = [
         password: "Rosa123!@",
         image: "src/assets/user-img/rosa.jpg",
         role: "user",
+        accepted: true
     },
     {
         userName: "Pepe",
@@ -37,6 +42,7 @@ const users = [
         password: "Pepe123!@",
         image: "src/assets/user-img/pepe.jpg",
         role: "user",
+        accepted: true
     },
     {
         userName: "Alex",
@@ -44,6 +50,7 @@ const users = [
         password: "Alex123!@",
         image: "src/assets/user-img/alex.jpg",
         role: "user",
+        accepted: true
     },
 ]
 

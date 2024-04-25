@@ -1,4 +1,4 @@
-const { deleteImgCloudinary } = require("../../middlewares/files.middlewares")
+const { deleteImgCloudinary } = require("../../utils/delete_img_cloudinary")
 const Bike = require("../models/bike_model")
 const Maker = require("../models/maker_model")
 

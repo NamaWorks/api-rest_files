@@ -1,3 +1,4 @@
+require("dotenv").config()
 const mongoose = require("mongoose")
 const Bike = require("../api/models/bike_model")
 const Maker = require("../api/models/maker_model")

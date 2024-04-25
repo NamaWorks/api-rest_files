@@ -1,4 +1,4 @@
-const { deleteImgCloudinary } = require("../../middlewares/files.middlewares");
+const { deleteImgCloudinary } = require("../../utils/delete_img_cloudinary");
 const { generateSign } = require("../../utils/jwt");
 const User = require("../models/user_model");
 const bcrypt = require("bcrypt")
@@ -38,11 +38,12 @@ const userLogin = async (req, res, next) => {
         const userMail = await User.findOne({email : req.body.email})
 
         if(userMail){
+            console.log(userMail)
             if(bcrypt.compareSync(req.body.password, userMail.password)) {
                 const token = generateSign(userMail._id)
                 return res.status(200).json({ userMail, token})
             } else {
-                return res.status(400).json(`user or passwor are incorrect`)
+                return res.status(400).json(`user or password incorrect`)
             }
         } else {
             return res.status(400).json(`user or password are not correct`)
@@ -57,9 +58,10 @@ const deleteUserById = async (req, res, next) => {
     try {
         const { id } = req.params
         const userToDelete = await User.findById(id)
-        console.log(userToDelete)
         if(userToDelete.image){deleteImgCloudinary(userToDelete.image)}
+
         const userDeleted = await User.findByIdAndDelete(id)
+
         return res.status(200).json(`user deleted: ${userDeleted}`)
     } catch (err) {
         return res.status(400).json(`error at deleteUserById: ${err}`)
@@ -69,19 +71,13 @@ const deleteUserById = async (req, res, next) => {
 const updateUserById = async (req, res, next) => {
     try {
         const { id } = req.params
+        const originalUser = await User.findById(id)
+        if(originalUser.image){deleteImgCloudinary(originalUser.image)}
 
         const newUser = new User(req.body)
         newUser._id = id
 
-        const originalUser = await User.findById(id)
-        deleteImgCloudinary(originalUser.image)
-
-        if(newUser.image){
-            const userToUpdate = await User.findById(id)
-            const { image } = userToUpdate
-            deleteImgCloudinary(image)
-            newUser.image = req.file.path
-        }
+        if(req.file){newUser.image = req.file.path}
 
         const updatedUser = await User.findByIdAndUpdate(id, newUser, {new:true})
         return res.status(200).json(updatedUser)

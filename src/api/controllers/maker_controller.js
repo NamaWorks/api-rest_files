@@ -1,5 +1,7 @@
-const { deleteImgCloudinary } = require("../../middlewares/files.middlewares");
+
+const { deleteImgCloudinary } = require("../../utils/delete_img_cloudinary");
 const Maker = require("../models/maker_model");
+
 
 const getMakers = async (req, res, next) => {
     try {

@@ -4,9 +4,6 @@ const makerRouter = require("./src/api/routes/maker_routes")
 const userRouter = require("./src/api/routes/user_routes")
 const cors = require("cors");
 const { connectDB } = require("./src/config/db")
-const { feedBikes } = require("./src/seeds/bikes.seed")
-const { feedMakers } = require("./src/seeds/makers.seed")
-const { feedUsers } = require("./src/seeds/users.seed")
 const cloudinary = require("cloudinary").v2
 
 require("dotenv").config()
@@ -21,10 +18,6 @@ cloudinary.config({
 
 app.use(express.json())
 app.use(cors());
-
-// feedUsers()
-// feedBikes()
-// feedMakers()
 
 connectDB()
 
