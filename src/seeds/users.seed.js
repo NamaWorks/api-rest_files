@@ -78,7 +78,7 @@ const feedUsers = async () => {
         })
         .then((result) => {
             element.image = result.url
-            console.log(element)
+            // console.log(element)
         })
         }
         async function feed(){

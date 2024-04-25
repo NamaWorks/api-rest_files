@@ -2,9 +2,10 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 const Bike = require("../api/models/bike_model")
 const Maker = require("../api/models/maker_model")
-const { upload } = require("../middlewares/files.middlewares")
+const { configCloudinary } = require("../middlewares/files.middlewares")
 const cloudinary = require('cloudinary').v2;
 
+configCloudinary()
 const bikes = [
     {
       modelName: "Honda CBR1000RR",
@@ -180,27 +181,47 @@ const bikes = [
   }
 
   const feedBikes = async () => {
+    await prepareBikesData()
     try {
-        await mongoose
+      for (let i = 0; i < bikesData.length; i++) {
+        const bike = bikesData[i];
+
+        await cloudinary.uploader
+        .upload(bike.image, {
+            use_filename: true,
+            folder: "12_RTC_P12_API-REST-FILES",
+        })
+        .then((result) => {
+            bike.image = result.url
+            console.log(bike)
+        })
+      }
+      async function feed() {
+        try {
+          await mongoose
             .connect(process.env.DB_URL)
             .then(async () => {
-                const allBikes = await Bike.find()
-                if(allBikes.length){Bike.collection.drop()}
+              const allBikes = await Bike.find();
+              if (allBikes.length) {
+                Bike.collection.drop();
+              }
             })
-            .catch(err => console.log(`error deleting data-bikes: ${err}`))
+            .catch((err) => console.log(`error deleting data-bikes: ${err}`))
             .then(async () => {
-                await prepareBikesData()
-                console.log(`bikeData prepared`)
+              await Bike.insertMany(bikesData);
+              console.log(`bikesData inserted`);
             })
-            .catch(err => console.log(`error at prepareBikesData: ${err}`))
-            .then(async () => {
-              await Bike.insertMany(bikesData)
-              console.log(`bikesData inserted`)
-            })
-            .catch(err => console.log(`error at insertMany(bikesDocuments): ${err}`))
+            .catch((err) =>
+              console.log(`error at insertMany(bikesDocuments): ${err}`)
+            );
+        } catch (err) {
+          console.log(`error feeding bikes: ${err}`);
+        }
+      }
+      feed();
     } catch (err) {
-        console.log(`error feeding bikes: ${err}`)
+      console.log(`error at uploading bikes: ${err}`)
     }
-  }
+  };
 
   module.exports = { feedBikes }
