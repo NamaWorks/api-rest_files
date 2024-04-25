@@ -164,23 +164,13 @@ const bikes = [
         const makers = await Maker.find()
         bikes.forEach(bike => {
           let bikeMaker = bike.maker
-          makers.forEach(async (maker) => {
+          makers.forEach((maker) => {
             const {makerName} = maker
             if(makerName === bikeMaker) {
               bike.maker = maker._id
             }
           })
 
-          //! Upload to cloudinary
-          // cloudinary.uploader
-          // .upload(bike.image, { 
-          //   use_filename: true,
-          //   folder: "12_RTC_P12_API-REST-FILES"})
-          // .then((result)=>{
-          //   console.log(result.url)
-          //   bike.image = result.url
-          //   // console.log(bike)
-          // });
           
           bikesData.push(new Bike(bike))
         })

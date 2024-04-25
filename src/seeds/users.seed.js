@@ -2,6 +2,10 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 const User = require("../api/models/user_model")
 const bcrypt = require("bcrypt")
+const { configCloudinary } = require("../middlewares/files.middlewares")
+const cloudinary = require("cloudinary").v2
+
+configCloudinary()
 
 const users = [
     {
@@ -65,20 +69,39 @@ const usersDocuments = users.map(user=>new User({
 
 const feedUsers = async () => {
     try {
-        await mongoose
-        .connect(process.env.DB_URL)
-        .then( async () => {
-            const allUsers = await User.find()
-            if(allUsers.length){User.collection.drop()}
+        for (let i = 0; i < usersDocuments.length; i++) {
+        const element = usersDocuments[i];
+        await cloudinary.uploader
+        .upload(element.image, {
+            use_filename: true,
+            folder: "12_RTC_P12_API-REST-FILES",
         })
-        .catch(err => console.log(` error deleting data-User: ${err}`))
-        .then(async () => {
-            await User.insertMany(usersDocuments)
-            console.log(`usersDocuments inserted`)
+        .then((result) => {
+            element.image = result.url
+            console.log(element)
         })
-        .catch(err => console.log(`error inserting usersDocuments: ${err}`))
+        }
+        async function feed(){
+            try {
+                await mongoose
+                .connect(process.env.DB_URL)
+                .then( async () => {
+                    const allUsers = await User.find()
+                    if(allUsers.length){User.collection.drop()}
+                })
+                .catch(err => console.log(` error deleting data-User: ${err}`))
+                .then(async () => {
+                    await User.insertMany(usersDocuments)
+                    console.log(`usersDocuments inserted`)
+                })
+                .catch(err => console.log(`error inserting usersDocuments: ${err}`))
+            } catch (err) {
+                console.log(`error feeding users: ${err}`)
+            }
+        }
+        feed()
     } catch (err) {
-        console.log(`error feeding users: ${err}`)
+        console.log(`error at uploading users images: ${err}`)
     }
 }
 
